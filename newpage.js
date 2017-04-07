@@ -1,28 +1,28 @@
 var express = require('express'),
   router = express.Router(),
   md = require("markdown").markdown,
-  fs = require('fs');
+  builder = require('./pagebuilder');
 
 router.route('/')
   .post((req, res) => {
     if (req.body.markdown && req.body.title) {
-      var mark = req.body.markdown;
-      var title = req.body.title;
-      var parsed = md.toHTML(mark);
+      const mark = req.body.markdown;
+      const title = req.body.title;
+      const content = md.toHTML(mark);
 
-      var content = {
+
+      var page = {
         title,
-        date: Date.now(),
-        content: parsed
-      }
+        date: new Date().toLocaleString("en-us", {month: "short", day: "numeric", year: "numeric"}),
+        content
+      };
 
-      fs.writeFile(`build/blog/${Date.now()}`, JSON.stringify(content), 'utf8', err => {
-        if (err) throw err;
-      })
+      builder(page, (name)=>{
+        res.redirect('/blog/' + name;
+      });
 
-      res.send(parsed)
     } else {
-      res.sendStatus(500)
+      res.sendStatus(500);
     }
   })
 
