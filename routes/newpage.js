@@ -1,7 +1,7 @@
 var express = require('express'),
   router = express.Router(),
   md = require("markdown").markdown,
-  builder = require('./pagebuilder');
+  builder = require('../lib/pagebuilder');
 
 router.route('/')
   .post((req, res) => {
@@ -18,7 +18,7 @@ router.route('/')
       };
 
       builder(page, (name)=>{
-        res.redirect('/blog/' + name;
+        res.redirect('/blog/' + name);
       });
 
     } else {
