@@ -4,17 +4,50 @@
     <meta charset="utf-8">
     <title>New Blog!</title>
     <style media="screen">
+      .parent {
+        display: flex;
+      }
 
+      .parent > div {
+        width: 50%;
+        height: 100vh;
+      }
+
+      .block {
+        background-color: grey;
+        padding: 1em;
+      }
+
+      form {
+        padding: 1em;
+      }
+      .lb {
+        background-color: lightblue;
+      }
     </style>
   </head>
   <body>
-    <form action="/new" method="POST">
-      <label for="">Title: </label>
-      <input type="text" name="title" id="title" value="">
-
-      <label for="">Content (markdown): </label>
-      <textarea name="markdown" id="markdown" rows="8" cols="80"></textarea>
-      <input type="submit" name="" value="submit">
-    </form>
+    <div class="parent" id="preview">
+      <div class="lb">
+        <form action="/new" method="POST">
+          <div>
+            <label for="">Title: </label>
+            <input type="text" name="title" id="title" v-model="title" value="">
+          </div>
+          <label for="">Content (markdown): </label>
+          <div>
+            <textarea v-model="input" name="markdown" id="markdown" rows="8" cols="80"></textarea>
+          </div>
+          <input type="submit" name="" value="submit">
+        </form>
+      </div>
+      <div class="block">
+        <h1>{{ title }}</h1>
+        <div v-html="preview"></div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script type="text/javascript" src="js/markdown.js"></script>
+    <script type="text/javascript" src="js/preview.js"></script>
   </body>
 </html>
